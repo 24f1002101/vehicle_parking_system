@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+    {% block title %}
+        User homepage
+    {% endblock %}
+    {% block content %}
+    <style>
+        body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        color: #333;
+        padding: 20px;
+    }
+
+    h2 {
+        color: #2c3e50;
+        margin-bottom: 20px;
+    }
+
+    .flash-messages div {
+        background-color: #ffe0e0;
+        border-left: 5px solid #e74c3c;
+        padding: 10px;
+        margin-bottom: 15px;
+        font-weight: bold;
+        color: #c0392b;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 30px;
+        background-color: #fff;
+        box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    table td, table th {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: center;
+    }
+
+    table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    table tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    table th {
+        background-color: #3498db;
+        color: white;
+        font-weight: bold;
+    }
+
+    form {
+        margin-top: 30px;
+        background-color: #fff;
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    input[type="text"] {
+        padding: 8px;
+        width: 300px;
+        margin-right: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    input[type="submit"] {
+        padding: 8px 15px;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #2980b9;
+    }
+
+    a {
+        color: #2980b9;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+    </style>
+      {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for message in messages %}
+                        <div>{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        <h2>Welcome {{ user.user_name }} &nbsp; &nbsp; &nbsp; &nbsp;<a href="{{ url_for('homepage',user_id=user.user_id) }}"> Home </a> &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; &nbsp; &nbsp; &nbsp; <a href="{{ url_for('summary',user_id=user.user_id) }}"> Summary </a>&nbsp; &nbsp; &nbsp; &nbsp; |&nbsp; &nbsp; &nbsp; &nbsp;  <a href="{{ url_for('logout',user_id=user.user_id) }}">Logout </a>&nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; &nbsp; &nbsp; &nbsp; <a href="{{ url_for('EditProfile',user_id = user.user_id) }}" >Edit Profile</a> </h2>
+
+        {% if details %}  
+        <center><h2>Recent Parking History </h2></center>
+            <table border="1">
+                <tr>
+                    <td>Spot Id </td>
+                    <td>Location </td>
+                    <td>Address</td>
+                    <td>Pincode</td>
+                    <td>Vehicle No</td>
+                    <td>Time Stamp</td>
+                    <td>Action</td>
+                </tr>
+                {% for i in details %}
+                <tr>
+                    <td>{{ i[1].spot_id }}</td>
+                    <td>{{ i[2].location }}</td>
+                    <td>{{ i[2].address }}</td>
+                    <td>{{ i[2].pincode }}</td>
+                    <td>{{ i[0].vehicle_no }}</td>
+                    {% if i[0].leaving_timestamp %}
+                        <td>{{ i[0].leaving_timestamp  }}</td>
+                    {% else %}
+                        <td>{{ i[0].parking_timestamp }}</td>
+                    {% endif %}
+                    {% if i[0].leaving_timestamp %}
+                        <td>Parked out</td>
+                    {% else %}
+                        <td><a href="{{ url_for('release',spot_id=i[1].spot_id,user_id=user.user_id,registration_id=i[0].registration_id) }}">Release </a></td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+            <hr>
+        <form method="POST" action="{{ url_for('homepage',user_id=user.user_id) }}">
+            Enter Location/pincode to find Parking Lot : <input type="text" name= "location" required>
+             <input type="submit" value="check" name="act">
+             <input type="submit" value="cancel" name="act">
+        </form>
+        {% if ps %}
+        <table border="1">
+            <tr>
+                <td>Lot Id</td>
+                <td>Location</td>
+                <td>Address</td>
+                <td>Pin Code</td>
+                <td>Avalability</td>
+                <td> Price </td>
+                <td>Action </td>
+            </tr>
+            {% for i in ps %}
+                <td>{{ i[0].lot_id }}</td>
+                <td> {{ i[0].location }}</td>
+                <td>{{ i[0].address }}</td>
+                <td>{{ i[0].pincode }}</td>
+                <td>   {{ i[1] }} </td>
+                <td> {{ i[0].price  }} </td>
+               <td> <a href="{{ url_for('spot_book',lot_id= i[0].lot_id,user_id=user.user_id) }}"> Book </a></td> 
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+    {% endblock %}

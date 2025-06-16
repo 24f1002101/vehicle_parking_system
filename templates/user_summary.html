@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Summary
+{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+    }
+
+    h2.heading {
+        text-align: center;
+        color: #333;
+        margin-top: 30px;
+        margin-bottom: 20px;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    table {
+        width: 90%;
+        margin: 0 auto 40px auto;
+        border-collapse: collapse;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+        border: 1px solid #ccc;
+        padding: 12px;
+        text-align: center;
+    }
+
+    th {
+        background-color: #007BFF;
+        color: white;
+    }
+
+    td {
+        font-size: 14px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .back-link {
+        display: block;
+        text-align: center;
+        margin: 20px auto;
+        font-size: 16px;
+        text-decoration: none;
+        color: #0066cc;
+        font-weight: bold;
+    }
+
+    .back-link:hover {
+        text-decoration: underline;
+        color: #004999;
+    }
+</style>
+
+{% if details %}
+    <h2 class="heading">Summary</h2>
+    <table>
+        <tr>
+            <th>Lot Location</th>
+            <th>Lot Address</th>
+            <th>Vehicle Parked</th>
+            <th>Parked In Time</th>
+            <th>Parked Out Time</th>
+            <th>Total Hours Parked</th>
+            <th>Cost</th>
+        </tr>
+        {% for i in details %}
+        <tr>
+            <td>{{ i[2].location }}</td>
+            <td>{{ i[2].address }}</td>
+            <td>{{ i[0].vehicle_no }}</td>
+            <td>{{ i[0].parking_timestamp }}</td>
+            <td>{{ i[0].leaving_timestamp }}</td>
+            <td>{{ i[-1]|round(2) }}</td>
+            <td>{{ i[-2]|round(2) }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+
+<a href="{{ url_for('homepage', user_id=user_id) }}" class="back-link">Go Back</a>
+{% endblock %}

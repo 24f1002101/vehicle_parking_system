@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Edit Profile
+{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #f4f6f8;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .flash-messages {
+        background-color: #fff8c4;
+        color: #5c4b00;
+        padding: 10px 15px;
+        border: 1px solid #ffe58f;
+        border-radius: 6px;
+        margin-bottom: 20px;
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .edit-form {
+        background-color: #ffffff;
+        max-width: 500px;
+        margin: 30px auto;
+        padding: 25px 30px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .edit-form h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .edit-form label {
+        display: block;
+        margin: 10px 0 5px;
+        font-weight: bold;
+        color: #444;
+    }
+
+    .edit-form input[type="text"],
+    .edit-form input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        margin-bottom: 15px;
+    }
+
+    .edit-form input[type="submit"] {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        margin-right: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .edit-form input[type="submit"]:last-child {
+        background-color: #dc3545;
+    }
+
+    .edit-form input[type="submit"]:hover {
+        opacity: 0.9;
+    }
+</style>
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <div class="flash-messages">
+            {% for message in messages %}
+                <div>{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+
+<form method="POST" action="{{ url_for('EditProfile', user_id=user.user_id) }}" class="edit-form">
+    <h2>Edit Profile</h2>
+
+    <label for="naam">Name:</label>
+    <input type="text" name="naam" id="naam">
+
+    <label for="email">Email:</label>
+    <input type="text" name="email" id="email">
+
+    <label for="password">Password:</label>
+    <input type="text" name="password" id="password">
+
+    <label for="address">Address:</label>
+    <input type="text" name="address" id="address">
+
+    <label for="pin">Pincode:</label>
+    <input type="number" name="pin" id="pin">
+    <center>
+    <input type="submit" value="change" name="action">
+    <input type="submit" value="dont" name="action">
+    </center>
+</form>
+{% endblock %}

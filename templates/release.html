@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% block title %}
+    Release Spot
+{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #f2f2f2;
+        font-family: Arial, sans-serif;
+    }
+
+    .release-form {
+        background-color: white;
+        max-width: 500px;
+        margin: 40px auto;
+        padding: 25px 30px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .release-form h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #333;
+    }
+
+    .release-form label {
+        display: block;
+        margin: 10px 0 5px;
+        font-weight: bold;
+        color: #444;
+    }
+
+    .release-form input[type="text"],
+    .release-form input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+    .release-form input[disabled] {
+        background-color: #e9ecef;
+        color: #555;
+    }
+
+    .release-form input[type="submit"] {
+        padding: 10px 20px;
+        border: none;
+        margin-right: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .release-form input[type="submit"][value="Release"] {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .release-form input[type="submit"][value="Cancel"] {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .release-form input[type="submit"]:hover {
+        opacity: 0.9;
+    }
+</style>
+
+<div class="release-form">
+    <h2>Release Parking Spot</h2>
+    <form method="POST" action="{{ url_for('release', spot_id=parkingspot.spot_id, user_id=user_id, registration_id=registeredspot.registration_id) }}">
+        <label for="spot">Spot ID:</label>
+        <input type="number" value="{{ parkingspot.spot_id }}" disabled>
+
+        <label for="vehicle">Vehicle No:</label>
+        <input type="text" value="{{ registeredspot.vehicle_no }}" disabled>
+
+        <label for="ptime">Parking Timestamp:</label>
+        <input type="text" value="{{ registeredspot.parking_timestamp }}" disabled>
+
+        <label for="ltime">Leaving Timestamp:</label>
+        <input type="text" value="{{ timestamp }}" disabled>
+
+        <label for="price">Total Price:</label>
+        <input type="number" value="{{ price }}" disabled>
+        <center>
+        <input type="submit" value="Release" name="act">
+        <input type="submit" value="Cancel" name="act">
+        </center>
+    </form>
+</div>
+{% endblock %}

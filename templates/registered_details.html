@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% block title %}
+Registered Details
+{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #eef2f3;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .container {
+        width: 80%;
+        margin: 40px auto;
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        text-align: center;
+        color: #2d3436;
+        margin-bottom: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    table th, table td {
+        padding: 14px 16px;
+        text-align: center;
+        background-color: #fafafa;
+        border-bottom: 1px solid #ddd;
+        color: #2c3e50;
+    }
+
+    table th {
+        background-color: #dfe6e9;
+        font-weight: bold;
+    }
+
+    table tr:last-child td {
+        border-bottom: none;
+    }
+
+    a {
+        display: inline-block;
+        margin-top: 20px;
+        text-decoration: none;
+        background-color: #55efc4;
+        color: #2d3436;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: background-color 0.3s ease;
+    }
+
+    a:hover {
+        background-color: #00b894;
+        color: white;
+    }
+</style>
+
+<div class="container">
+    <h2>Registered Parking Details</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Registration ID</th>
+                <th>Customer ID</th>
+                <th>Customer Name</th>
+                <th>Vehicle Number</th>
+                <th>Parking Time Incurring</th>
+                <th>Cost Incurred</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ registered_spot.registration_id }}</td>
+                <td>{{ registered_spot.registered_user_id }}</td>
+                <td>{{ user.user_name }}</td>
+                <td>{{ registered_spot.vehicle_no }}</td>
+                <td>{{ hours }}</td>
+                <td>{{ price }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <center><a href="{{ url_for('expansion', lot_id=lot_id) }}">Go Back</a></center>
+</div>
+{% endblock %}

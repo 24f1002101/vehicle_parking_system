@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block title %}
+    Edit Lot
+{% endblock %}
+{% block content %}
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f8;
+        color: #2c3e50;
+        padding: 20px;
+    }
+
+    .flash-messages div {
+        background-color: #fff3cd;
+        border-left: 5px solid #ffc107;
+        padding: 10px;
+        margin-bottom: 20px;
+        font-weight: bold;
+        color: #856404;
+        border-radius: 4px;
+    }
+
+    form {
+        background-color: #fff;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        max-width: 500px;
+        margin: auto;
+    }
+
+    form input[type="text"],
+    form input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0 20px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+    form input[type="submit"] {
+        background-color: #3498db;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    .button-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+        }
+    form input[type="submit"]:hover {
+        background-color: #2980b9;
+    }
+</style>
+    {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for message in messages %}
+                        <div>{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+    <form action="{{ url_for('Edit',lot_id=lot.lot_id) }}" method="POST">
+    Location :<input type="text" name="location">
+    Address : <input type="text" name="address" >
+    Pincode : <input type="number" name="pin" >
+    Current Max Spots : <input type="number" value="{{ lot.max_spots }}" disabled>
+    Current Empty Spots : <input type="number" value="{{ empty }}" disabled>
+    Current Available Spots : <input type="number" value="{{ available }}" disabled>
+    Current Price : <input type="number" value="{{ lot.price }}" disabled>
+    Changing Max Spots (Press value d/i to increase or decrease): <input type="text" name="max_spots" >
+    Price : <input type="number" name="price" >
+     <div class="button-group">
+                <input type="submit" value="Change" name="edit">
+                <input type="submit" value="Don't Change" name="edit">
+        </div>
+
+</form>
+{% endblock %}
+
+cvbnm

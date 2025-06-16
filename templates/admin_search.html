@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% block title %}
+    search by admin
+{% endblock %}
+{% block content %}
+<style>
+    .go-back-link {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 15px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.go-back-link:hover {
+    background-color: #388e3c;
+    transform: translateY(-2px);
+}
+
+        form {
+        background-color: #ffffff;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        margin: 20px 0;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 15px;
+    }
+
+    form select,
+    form input[type="text"] {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 15px;
+        width: 180px;
+        background-color: #fafafa;
+    }
+
+    form input[type="submit"] {
+        padding: 10px 20px;
+        background-color: #26a69a;
+        color: #ffffff;
+        border: none;
+        border-radius: 6px;
+        font-size: 15px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    form input[type="submit"]:hover {
+        background-color: #00897b;
+    }
+
+    body {
+        background-color: #f4f4f4;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .flash-messages {
+        background-color: #fffbea;
+        padding: 12px;
+        border: 1px solid #ffe58f;
+        margin-bottom: 15px;
+        color: #7c6f00;
+        border-radius: 6px;
+    }
+    .lot-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
+    .lot-card {
+        background-color: #ffffff;
+        padding: 20px;
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .lot-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .lot-card h3 {
+        margin-top: 0;
+        margin-bottom: 12px;
+        color: #37474f;
+        font-size: 20px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 6px;
+    }
+
+    .lot-info {
+        margin: 6px 0;
+        color: #555;
+    }
+
+    .lot-info strong {
+        color: #009688;
+    }
+</style>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <div class="flash-messages">
+            {% for message in messages %}
+                <div>{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+    <form method="POST" action="{{ url_for('admin_search') }}">
+        Search by :
+        <select name="searching">
+            <option value="user_id"> By User ID</option>
+            <option value="location">By Location</option>
+            <option value="pincode"> By Pincode</option>
+        </select>
+        Enter the Value : <input type="text" name="parameter" required></input>
+        <input type="submit" value="submit">
+    </form>
+    <hr>
+    {% if details %}
+    <div class="lot-grid">
+    {% for i in details %}
+    <div class="lot-card">
+        <a href="{{ url_for('expansion',lot_id= i[0].lot_id) }}">
+        <h3>Parking Lot #{{ i[0].lot_id }}</h3>
+        <div class="lot-info"><strong>Location:</strong> {{ i[0].location }}</div>
+        <div class="lot-info"><strong>Address:</strong> {{ i[0].address }}</div>
+        <div class="lot-info"><strong>Pincode:</strong> {{ i[0].pincode }}</div>
+        <div class="lot-info"><strong>Price:</strong> ₹{{ i[0].price }}</div>
+        <div class="lot-info"><strong>Available Spots:</strong> {{ i[1] }}</div>
+        <div class="lot-info"><strong>Occupied Spots:</strong> {{ i[2] }}</div>
+        <div>
+            <a href="{{ url_for('Edit',lot_id=i[0].lot_id ) }}">Edit</a>
+            <a href="{{ url_for('deletelot',lot_id=i[0].lot_id) }}">Delete</a>
+        </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+    <center><a href="{{ url_for('display') }}" class="go-back-link">Go Back </a></center>
+{% endblock %}

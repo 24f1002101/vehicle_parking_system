@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ParkSmart - Vehicle Parking Registration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 50%, #0D47A1 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Background pattern */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 25% 75%, rgba(33, 150, 243, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 75% 25%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(25, 118, 210, 0.2) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .system-logo {
+            width: 90px;
+            height: 90px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            backdrop-filter: blur(10px);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .system-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .system-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+        .flash-messages {
+            margin-bottom: 15px;
+        }
+
+        .flash-messages div {
+            background-color: #ffefef;
+            color: #a94442;
+            padding: 10px;
+            border-left: 5px solid #f44336;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .system-description {
+            font-size: 1rem;
+            opacity: 0.8;
+            max-width: 550px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .register-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 45px 50px;
+            border-radius: 25px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            width: 480px;
+            max-width: 90vw;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+        }
+
+        .register-container::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(45deg, #2196F3, #1976D2, #0D47A1, #2196F3);
+            border-radius: 28px;
+            z-index: -1;
+            opacity: 0.8;
+        }
+
+        .register-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .register-header h2 {
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .register-header p {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .parking-icon {
+            display: inline-block;
+            margin: 0 5px;
+            font-size: 1.3rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 22px;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #2196F3;
+            font-size: 1.2rem;
+            z-index: 2;
+        }
+
+        form input[type="text"],
+        form input[type="email"],
+        form input[type="password"],
+        form input[type="number"] {
+            width: 100%;
+            padding: 18px 18px 18px 50px;
+            border: 2px solid #e3f2fd;
+            border-radius: 15px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #fafbfc;
+            color: #333;
+        }
+
+        form input[type="text"]:focus,
+        form input[type="email"]:focus,
+        form input[type="password"]:focus,
+        form input[type="number"]:focus {
+            outline: none;
+            border-color: #2196F3;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.1);
+            transform: translateY(-2px);
+        }
+
+        form input[type="submit"] {
+            width: 100%;
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+            color: white;
+            padding: 18px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        form input[type="submit"]:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(33, 150, 243, 0.4);
+            background: linear-gradient(135deg, #1976D2 0%, #0D47A1 100%);
+        }
+
+        form input[type="submit"]:active {
+            transform: translateY(-1px);
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid #e3f2fd;
+        }
+
+        .login-link a {
+            color: #2196F3;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .login-link a:hover {
+            color: #1976D2;
+            text-decoration: underline;
+        }
+
+        .flash-messages {
+            margin-bottom: 25px;
+        }
+
+        .flash-messages div {
+            background: linear-gradient(135deg, #ff5722, #d32f2f);
+            color: white;
+            padding: 15px 18px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            border-left: 5px solid #b71c1c;
+            box-shadow: 0 4px 12px rgba(255, 87, 34, 0.3);
+        }
+
+        .benefits-section {
+            margin-top: 35px;
+            text-align: center;
+            color: white;
+        }
+
+        .benefits-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .benefit-card {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            transition: all 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .benefit-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .benefit-desc {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .system-title {
+                font-size: 2.2rem;
+            }
+            
+            .register-container {
+                padding: 35px 30px;
+                width: 95vw;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .input-group {
+                margin-bottom: 18px;
+            }
+        }
+
+        /* Parking decoration */
+        .parking-decoration {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            opacity: 0.1;
+            font-size: 10rem;
+            color: white;
+            z-index: -1;
+        }
+
+        .security-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(76, 175, 80, 0.9);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+     {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for message in messages %}
+                        <div>{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+    <div class="parking-decoration">🚗</div>
+    <div class="security-badge">🔒 Secure Registration</div>
+    
+    <div class="header-section">
+        <div class="system-logo">🅿️</div>
+        <h1 class="system-title">ParkSmart</h1>
+        <p class="system-subtitle">Vehicle Parking Management System</p>
+        <p class="system-description">
+            Join thousands of users who trust ParkSmart for efficient parking management. 
+            Create your account to access premium parking services and real-time space monitoring.
+        </p>
+    </div>
+
+    <div class="register-container">
+        <div class="register-header">
+            <h2>Create Your Account</h2>
+            <p>Start your smart parking journey today 
+                <span class="parking-icon">🚙</span>
+                <span class="parking-icon">🅿️</span>
+                <span class="parking-icon">🚕</span>
+            </p>
+        </div>
+
+        <!-- Flash messages section (hidden in static version) -->
+        <div class="flash-messages" style="display: none;">
+            <div>⚠️ Sample error message</div>
+        </div>
+
+        <form method="POST" action="/register">
+            <div class="input-group">
+                <span class="input-icon">👤</span>
+                <input type="text" name="naam" placeholder="Full Name / Username" required>
+            </div>
+            
+            <div class="input-group">
+                <span class="input-icon">📧</span>
+                <input type="email" name="email" placeholder="Email Address" required>
+            </div>
+            
+            <div class="input-group">
+                <span class="input-icon">🔒</span>
+                <input type="password" name="password" placeholder="Create Password" required>
+            </div>
+            
+            <div class="input-group">
+                <span class="input-icon">🏠</span>
+                <input type="text" name="address" placeholder="Home Address" required>
+            </div>
+            
+            <div class="input-group">
+                <span class="input-icon">📍</span>
+                <input type="number" name="pincode" placeholder="PIN Code" required>
+            </div>
+            
+            <input type="submit" value="Create Account">
+        </form>
+
+        <div class="login-link">
+            Already registered? <a href="/login">Login here</a>
+        </div>
+    </div>
+
+   
+</body>
+</html>

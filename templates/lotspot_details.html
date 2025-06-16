@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Expansion
+{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+    }
+
+    .flash-messages {
+        margin: 20px 0;
+        padding: 10px;
+        background-color: #dff0d8;
+        border-left: 5px solid #3c763d;
+        color: #3c763d;
+        border-radius: 5px;
+    }
+
+    table {
+        width: 90%;
+        margin: 20px auto;
+        border-collapse: collapse;
+        background-color: white;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    table th, table td {
+        padding: 12px 16px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+
+    table th {
+        background-color: #2c3e50;
+        color: white;
+    }
+
+    table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    table tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    a {
+        color: #2980b9;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .back-link {
+        display: block;
+        text-align: center;
+        margin: 30px;
+        font-size: 1.1rem;
+    }
+</style>
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <div class="flash-messages">
+            {% for message in messages %}
+                <div>{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+<center><h2>Lot Details </h2></center>
+<table>
+    <thead>
+        <tr>
+            <th>Lot ID</th>
+            <th>Spot ID</th>
+            <th>Location</th>
+            <th>Address</th>
+            <th>Pincode</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in spots %}
+        <tr>
+            <td>{{ lot.lot_id }}</td>
+            <td>{{ i.spot_id }}</td>
+            <td>{{ lot.location }}</td>
+            <td>{{ lot.address }}</td>
+            <td>{{ lot.pincode }}</td>
+            <td>{{ i.status }}</td>
+            {% if i.status == 'A' %}
+                <td><a href="{{ url_for('delete_spot', spot_id=i.spot_id, lot_id=lot.lot_id) }}">Delete</a></td>
+            {% elif i.status == 'O' %}
+                <td><a href="{{ url_for('show', spot_id=i.spot_id, lot_id=lot.lot_id) }}">Show Details</a></td>
+            {% else %}
+                <td>N/A</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ url_for('display') }}" class="back-link">Go Back</a>
+{% endblock %}

@@ -1,0 +1,252 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+    Role Selection - Parking Management
+{% endblock %}
+
+{% block content %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    body {
+        background-color: #e0e5ec; /* Soft, light background for neumorphism */
+        font-family: 'Poppins', sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh; /* Ensure it takes full viewport height */
+        margin: 0;
+        color: #333;
+    }
+
+    /* Wrapper for the image and form to sit side-by-side */
+    .page-wrapper {
+        display: flex;
+        background: #e0e5ec; /* Match body background for seamless look */
+        border-radius: 20px;
+        box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1), -10px -10px 20px rgba(255, 255, 255, 0.8); /* Neumorphic shadow */
+        overflow: hidden; /* Ensures rounded corners are applied to children */
+        max-width: 1000px; /* Max width for the entire component */
+        width: 90%; /* Responsive width */
+        margin: 20px; /* Margin around the container */
+        min-height: 500px; /* Minimum height for the wrapper */
+    }
+
+    .image-display {
+        flex: 1;
+        min-width: 350px; /* Minimum width for the image section */
+        background: url('https://images.unsplash.com/photo-1598044833294-432269229009?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center;
+        background-size: cover;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .image-display::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.4); /* Dark overlay for text readability */
+        border-radius: 20px; /* Match parent border-radius */
+    }
+
+    .image-content {
+        position: relative;
+        z-index: 1;
+        color: white;
+        padding: 20px;
+    }
+
+    .image-content h2 {
+        font-size: 2.2em;
+        margin-bottom: 10px;
+        font-weight: 600;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+    }
+
+    .image-content p {
+        font-size: 1.1em;
+        line-height: 1.6;
+        font-weight: 300;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    }
+
+    .role-container {
+        flex: 1;
+        min-width: 400px; /* Minimum width for the form section */
+        padding: 40px;
+        background: #e0e5ec; /* Match body background */
+        border-radius: 20px; /* Match parent border-radius */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .role-container h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #333;
+        font-size: 2em;
+        font-weight: 600;
+    }
+
+    .role-container p.description {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #555;
+        font-size: 0.95em;
+        line-height: 1.5;
+    }
+
+    label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 10px;
+        color: #444;
+        font-size: 1.05em;
+    }
+
+    select {
+        width: 100%;
+        padding: 12px 15px;
+        border-radius: 10px; /* More rounded */
+        border: none; /* Remove default border */
+        background: #e0e5ec; /* Neumorphic input background */
+        box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1), inset -2px -2px 5px rgba(255, 255, 255, 0.7);
+        font-size: 1em;
+        color: #333;
+        margin-bottom: 25px;
+        appearance: none; /* Remove default dropdown arrow */
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23333%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13.2-5.4H18.6c-5%200-9.3%201.8-13.2%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2013.2l128%20128c3.9%203.9%208.2%205.8%2013.2%205.8s9.3-1.9%2013.2-5.8l128-128c3.6-3.5%205.4-7.8%205.4-12.8%200-5-1.8-9.3-5.4-12.9z%22%2F%3E%3C%2Fsvg%3E');
+        background-repeat: no-repeat;
+        background-position: right 15px center;
+        background-size: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    select:focus {
+        outline: none;
+        box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.1), inset -1px -1px 2px rgba(255, 255, 255, 0.7), 0 0 0 2px #6c63ff; /* Focus ring */
+    }
+
+    input[type="submit"] {
+        width: 100%;
+        padding: 15px;
+        background: linear-gradient(145deg, #6c63ff, #574ae2); /* Gradient button */
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 1.1em;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 10px;
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1), -5px -5px 10px rgba(255, 255, 255, 0.7);
+        transition: all 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+        background: linear-gradient(145deg, #574ae2, #6c63ff);
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1), -2px -2px 5px rgba(255, 255, 255, 0.7);
+        transform: translateY(-2px);
+    }
+
+    .flash-messages {
+        margin-bottom: 20px;
+        padding: 12px;
+        background-color: #ffe0e0; /* Lighter red background */
+        border-left: 5px solid #d32f2f; /* Darker red border */
+        color: #d32f2f; /* Darker red text */
+        border-radius: 8px;
+        font-size: 0.9em;
+        box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 850px) {
+        .page-wrapper {
+            flex-direction: column;
+            max-width: 500px;
+            min-height: unset; /* Allow height to adjust */
+        }
+
+        .image-display {
+            min-height: 250px;
+            border-radius: 20px 20px 0 0; /* Adjust border radius for top */
+        }
+
+        .image-display::before {
+            border-radius: 20px 20px 0 0;
+        }
+
+        .role-container {
+            min-width: unset; /* Remove min-width for smaller screens */
+            padding: 30px;
+            border-radius: 0 0 20px 20px; /* Adjust border radius for bottom */
+        }
+    }
+
+    @media (max-width: 500px) {
+        .role-container {
+            padding: 20px;
+        }
+
+        .role-container h2 {
+            font-size: 1.8em;
+        }
+
+        .image-content h2 {
+            font-size: 1.8em;
+        }
+
+        .image-content p {
+            font-size: 0.9em;
+        }
+    }
+</style>
+
+<div class="page-wrapper">
+    <div class="image-display">
+        <div class="image-content">
+            <h2>Efficient Parking Management</h2>
+            <p>Seamlessly manage vehicle access and optimize parking space utilization. Select your role to proceed to the system dashboard.</p>
+        </div>
+    </div>
+
+    <div class="role-container">
+        <h2>Access Parking Management System</h2>
+        <p class="description">Please select your role to gain appropriate access and functionalities within the system.</p>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for message in messages %}
+                        <div>{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('role') }}">
+            <label for="role">Choose Your System Role</label>
+            <select name="role" id="role" required>
+                <option value="" disabled selected>-- Select a Role --</option>
+                <option value="User">Parking User</option>
+                <option value="Admin">System Admin</option>
+            </select>
+            <input type="submit" value="Continue to Dashboard">
+        </form>
+    </div>
+</div>
+{% endblock %}
+```

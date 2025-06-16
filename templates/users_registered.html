@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Registered Users
+{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f8f9fa;
+        padding: 30px;
+    }
+
+    h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    table {
+        width: 80%;
+        margin: auto;
+        border-collapse: collapse;
+        background-color: white;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    th {
+        background-color: #007BFF;
+        color: white;
+        font-size: 1.2em;
+        padding: 12px;
+        text-align: center;
+    }
+
+    td {
+        padding: 10px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+    }
+
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .back-link {
+        text-align: center;
+        margin-top: 25px;
+    }
+
+    .back-link a {
+        text-decoration: none;
+        color: white;
+        background-color: #007BFF;
+        padding: 10px 20px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .back-link a:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+{% if users %}
+<table>
+    <tr>
+        <th colspan="5">Registered Users</th>
+    </tr>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>Pin Code</th>
+    </tr>
+    {% for i in users %}
+        <tr>
+            <td>{{ i.user_id }}</td>
+            <td>{{ i.user_name }}</td>
+            <td>{{ i.email }}</td>
+            <td>{{ i.address }}</td>
+            <td>{{ i.pincode }}</td>
+        </tr>
+    {% endfor %}
+</table>
+{% endif %}
+<div class="back-link">
+    <a href="{{ url_for('display') }}">Go Back</a>
+</div>
+{% endblock %}
