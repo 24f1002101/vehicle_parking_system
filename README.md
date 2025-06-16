@@ -27,10 +27,10 @@ Technologies Used
 
 Installation
 1. Clone the repository:
-    git clone https://github.com/24f1002101/vehicle_parking_system.git
-    cd vehicle_parking_system
+    1. git clone https://github.com/24f1002101/vehicle_parking_system.git
+    2. cd vehicle_parking_system
 2. Run the application:
-    python main.py
+    1. python main.py
 The app will be accessible at https://127.0.0.1:5000/. The database will be created automatically on first run. bt no problem I have attached the database also ...
 
 File Structure
