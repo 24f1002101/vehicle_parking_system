@@ -6,17 +6,17 @@ Overview :
 3. This Vehicle Parking Management System allows users to view their Parking history,parkinglots , book spot in parkinglot , edit his profile etc
 
 Features:
-For Admin :
-Dashboard : Overview of all parkinglots , editing the parkinglot , delete parkinglot if empty
-Users : viewing all the registered Users
-Search : Search the parkinglots by user_id or location or pincode .if he clicks on parkinglot it expands and displays the all available and empty spots in that lot , there he/she can view details of occupied spot and delete the spot if it is empty .
-Edit Profile: Editing his/her profile
-logout : logging out of the system 
+1. For Admin :
+    1. Dashboard : Overview of all parkinglots , editing the parkinglot , delete parkinglot if empty
+    2. Users : viewing all the registered Users
+    3. Search : Search the parkinglots by user_id or location or pincode .if he clicks on parkinglot it expands and displays the all available and empty spots in that lot , there he/she can view details of occupied spot and delete the spot if it is empty .
+    4. Edit Profile: Editing his/her profile
+    5. logout : logging out of the system 
 
-For User:
-Dashboard: Overview of his/her parking history if available and details of all parkinglots if it contains atleast one empty parking spot
-Edit Profile: editing his/her profile
-Summary:Overview of details which he parked out from the lots.
+2. For User:
+    1. Dashboard: Overview of his/her parking history if available and details of all parkinglots if it contains atleast one empty parking spot
+    2. Edit Profile: editing his/her profile
+    3. Summary:Overview of details which he parked out from the lots.
 
 Technologies Used
 1. Flask: Python web framework for backend logic.
