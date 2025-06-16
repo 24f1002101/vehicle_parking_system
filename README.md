@@ -33,12 +33,12 @@ Installation
     1. python main.py
 The app will be accessible at https://127.0.0.1:5000/. The database will be created automatically on first run. bt no problem I have attached the database also ...
 
-File Structure
-vehicle_parking_system/
-├── templates                 # HTML templates for rendering pages
-├── instance                  # Contains the database of sqlite3
-├── main.py                   # Main application file
-├── contollers                # Contains(python files) implementing functionalities of user and admin
-├── model                     # Contains the model classes of the database
-├── .gitignore                # Contains the pycache and virtual environment folder
-├── README.md                 # Project documentation
+File Structure:
+    vehicle_parking_system/
+    ├── templates                 # HTML templates for rendering pages
+    ├── instance                  # Contains the database of sqlite3
+    ├── main.py                   # Main application file
+    ├── contollers                # Contains(python files) implementing functions of user and admin
+    ├── model                     # Contains the model classes of the database
+    ├── .gitignore                # Contains the pycache and virtual environment folder
+    ├── README.md                 # Project documentation
