@@ -29,8 +29,10 @@ Installation
 1. Clone the repository:
     1. git clone https://github.com/24f1002101/vehicle_parking_system.git
     2. cd vehicle_parking_system
+    3. create virtual environment by python -m venv virtual_environment_name
+    4. pip install -r requirements.txt
 2. Run the application:
     1. python main.py
-The app will be accessible at https://127.0.0.1:5000/. The database will be created automatically on first run. bt no problem I have attached the database also ...
+The app will be accessible at https://127.0.0.1:5000/. The database will be created automatically on first run. but no problem I have attached the database also ...
 
 ![Screenshot from 2025-06-16 23-56-14](https://github.com/user-attachments/assets/7b25dec3-7ae0-4f6e-a37d-43150b4ca167)
