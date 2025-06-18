@@ -14,7 +14,7 @@ with app.app_context():
         admin = Admin(admin_name="Alam Balaji",email = "alambalaji1972@gmail.com",password="Balaji_459")
         db.session.add(admin)
         db.session.commit()
-        
+
 from controllers.auth import *
 from controllers.admin_func import *
 from controllers.user_func import * 
