@@ -34,4 +34,5 @@ Installation
     5. pip install -r requirements.txt
 2. Run the application:
     1. python3 main.py , The app will be accessible at https://127.0.0.1:5000/. Copy the link and open the browser to look at the application .
-![Screenshot from 2025-06-16 23-56-14](https://github.com/user-attachments/assets/7b25dec3-7ae0-4f6e-a37d-43150b4ca167)
+![Screenshot from 2025-06-19 22-42-15](https://github.com/user-attachments/assets/881da356-b8f7-4e8a-bc66-d43fdca99057)
+
