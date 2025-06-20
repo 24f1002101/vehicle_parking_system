@@ -106,6 +106,7 @@ def Edit(lot_id):
     empty_spots = db.session.query(Parkingspot).filter(Parkingspot.lot_id==lot.lot_id,Parkingspot.status=='A').all()
     available_spots = db.session.query(Parkingspot).filter(Parkingspot.lot_id==lot.lot_id,Parkingspot.status=='O').all()
     available = len(available_spots)
+    registered = db.session.query(Registeredspot).all()
     empty=len(empty_spots)
     if(request.method=='GET'):
         if('admin_name' in session and 'a_email' in session and 'a_pass' in session):
@@ -156,6 +157,10 @@ def Edit(lot_id):
                         lot.max_spots -= spots_val
                         for i in empty_spots:
                             if(count<spots_val):
+                                for j in registered:
+                                    if(j.registered_spot_id==i.spot_id):
+                                        db.session.delete(j)
+                                        db.session.commit()
                                 db.session.delete(i)
                                 db.session.commit()
                             else:
