@@ -175,6 +175,15 @@ def deletelot(lot_id):
     if('admin_name' in session and 'a_email' in session and 'a_pass' in session):
         lot = db.session.query(Parkinglot).filter(Parkinglot.lot_id==lot_id).first()
         empty_spots = db.session.query(Parkingspot).filter(Parkingspot.lot_id==lot_id,Parkingspot.status=='A').all()
+        spot_ids = db.session.query(Parkingspot).filter(Parkingspot.lot_id==lot_id).all()
+        l = []
+        for i in spot_ids:
+            l.append(i.spot_id)
+        registered = db.session.query(Registeredspot).all()
+        for i in registered:
+            if(i.registered_spot_id in l):
+                db.session.delete(i)
+                db.session.commit()
         if(lot.max_spots==len(empty_spots)):
             for i in empty_spots:
                 db.session.delete(i)
